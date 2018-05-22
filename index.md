@@ -1,4 +1,4 @@
 ---
 layout: meta-redirect
-location: /orm/1.x
+location: /orm/1.x/
 ---
