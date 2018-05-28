@@ -5,6 +5,12 @@ title: Data mapper
 ---
 # Data mapper
 
+- [Getting column values](#getting-column-values)
+- [Setting column values](#setting-column-values)
+- [Handling relationships](#handling-relationships)
+    - [Linked entities](#linked-entities)
+- [Miscellaneous](#miscellaneous)
+
 A data mapper is an instance of a class that implements the `Opis\Orm\IDataMapper` interface.
 This interface provides several methods that can be used to manipulate the data
 associated with an entity. This data represents a row that is or will be stored into a table.

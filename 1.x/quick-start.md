@@ -5,9 +5,10 @@ title: Quick start
 ---
 # Quick start
 
-1. [The entity manager](#the-entity-manager)
-2. [Defining entities](#defining-entities)
-3. [Working with entities](#working-with-entities)
+- [The entity manager](#the-entity-manager)
+- [Defining entities](#defining-entities)
+- [Working with entities](#working-with-entities)
+
 
 This is a quick overview of the library and of its features. 
 Don't worry if you don't understand every single line of code; 

@@ -5,10 +5,11 @@ title: Mapping entities
 ---
 # Entity mapping
 
-1. [Table name](#table-name)
-2. [Primary key](#primary-key)
-3. [Primary key generator](#primary-key-generator)
-4. [Sequence object's name](#sequence-objects-name)
+- [Entity mappers](#entity-mappers)
+- [Changing table name](#changing-table-name)
+- [Changing primary key](#changing-primary-key)
+- [Primary key generator](#primary-key-generator)
+- [Name of sequence object](#name-of-sequence-object)
 
 ## Entity mappers
 
@@ -75,7 +76,7 @@ $orm->registerMappingCallback(User::class, function(IEntityMapper $mapper){
 });
 ```
 
-## Table name
+## Changing table name
 
 The corresponding table of an entity is derived from the entity's class name,
 in lowercase, + the `s` suffix. Therefor, if a class `My\Blog\User` represents an entity, then
@@ -93,7 +94,7 @@ class User extends Entity implements IEntityMapper
 }
 ```
 
-## Primary key
+## Changing primary key
 
 By default, **Opis ORM** assumes that your table's primary key column is named `id`. 
 If your primary key column has a different name, you must specify this by using the
@@ -127,10 +128,10 @@ class User extends Entity implements IEntityMapper
 }
 ```
 
-## Sequence object's name
+## Name of sequence object
 
 **Opis ORM** allows you to create entities without explicitly adding a value for
-the [primary key](#primary-key). This is useful when you are relying on the 
+the [primary key](#changing-primary-key). This is useful when you are relying on the 
 auto-increment mechanism of a database system to assign an ID for your newly created
 record. To retrieve the ID of the newly created record, **Opis ORM** uses the PDO's 
 `lastInsertId` method, which require - for some database systems, like PostgreSQL - to

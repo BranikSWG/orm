@@ -5,10 +5,11 @@ title: Query builder
 ---
 # Query builder
 
-1. [Fetching entities](#fetching-entities)
-2. [Building queries](#building-queries)
-3. [Updating entities](#updating-entities)
-4. [Deleting entities](#deleting-entities)
+- [Fetching entities](#fetching-entities)
+- [Building queries](#building-queries)
+- [Updating entities](#updating-entities)
+- [Deleting entities](#deleting-entities)
+
 
 The query builder is based on the infrastructure provided by Opis Database library,
 and provides methods for fetching, updating or deleting records. 

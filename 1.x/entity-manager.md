@@ -5,12 +5,11 @@ title: Entity manager
 ---
 # Entity manager
 
-1. [Instantiation](#instantiation)
-2. [Creating entities](#creating-entities)
-3. [Persisting entities](#persisting-entities)
-4. [Fetching entities](#fetching-entities)
-5. [Deleting entities](#deleting-entities)
-
+- [Instantiation](#instantiation)
+- [Creating entities](#creating-entities)
+- [Persisting entities](#persisting-entities)
+- [Fetching entities](#fetching-entities)
+- [Deleting entities](#deleting-entities)
 
 ## Instantiation
 

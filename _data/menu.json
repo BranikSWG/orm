@@ -47,6 +47,11 @@
                     "title": "Entity mapping",
                     "url": "/1.x/entity-mapping.html",
                     "description": "Learn about entity mapping"
+                },
+                {
+                    "title": "Column mapping",
+                    "url": "/1.x/column-mapping.html",
+                    "description": "Learn how to map columns"
                 }
             ]
         }
