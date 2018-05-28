@@ -10,6 +10,71 @@ title: Mapping entities
 3. [Primary key generator](#primary-key-generator)
 4. [Sequence object's name](#sequence-objects-name)
 
+## Entity mappers
+
+By default, every entity class has an associated entity mapper that provides
+information about how that specific entity class maps to the SQL table that it represents.
+The entity mapper is an instance of a class that implements the `Opis\ORM\IEntityMapper` 
+interface and its purpose is to provide a simple and effective way of describing
+the relationship between an entity class and its corresponding table or between a
+group of related entities.
+
+Changing the default settings of an entity mapper is done by registering a callback
+function to the entity manager. The library provides multiple ways of doing that.
+The first way - which is the easiest and also the recommended way of registering a callback -
+is by implementing the `Opis\ORM\IMappableEntity` on an entity class.
+
+```php
+use Opis\ORM\{
+    Entity, IEntityMapper, IMappableEntity
+};
+
+class User extends Entity implements IMappableEntity
+{
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        // Map entity here
+    }
+}
+```
+
+Another way of registering this callback, is at the construct-time of the entity manager.
+
+```php
+use Opis\Database\Connection;
+use Opis\ORM\{
+    EntityManager, IEntityMapper
+};
+use MyBlog\{
+    User, Article
+};
+
+// Define a database connection
+$connection = new Connection("dsn:mysql;dbname=test", "root", "secret");
+
+// callbacks
+$mappers = [
+    User::class => function(IEntityMapper $mapper) {
+        // map entity here
+    },
+    Article::class => function(IEntityMapper $mapper) {
+        // map entity here
+    }
+];
+
+// Create an entity manager
+$orm = new EntityManager($connection, $mappers);
+```
+
+The third way of doing it, is by calling the `registerMappingCallback` method
+on the entity manager object instance.
+
+```php
+$orm->registerMappingCallback(User::class, function(IEntityMapper $mapper){
+  // map entity here
+});
+```
+
 ## Table name
 
 The corresponding table of an entity is derived from the entity's class name,
