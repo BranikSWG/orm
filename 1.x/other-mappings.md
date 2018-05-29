@@ -5,6 +5,10 @@ title: Other mappings
 ---
 # Other mappings
 
+- [Timestamps](#timestamps)
+- [Soft deletion](#soft-deletion)
+- [Filters](#filters)
+
 ## Timestamps
 
 **Opis ORM** allows you to automatically set timestamps to a row by using the
@@ -44,7 +48,7 @@ $article->setTitle('Updated');
 $orm->save($article);
 ```
 
-## Soft delete
+## Soft deletion
 
 Soft deletion is technique used to mark a row as being deleted, without actually deleting it.
 In order to be able to use soft deletes, we must use the `useSoftDelete` method.
@@ -90,3 +94,47 @@ $orm(Article::class)
     ->where('published')->is(false)
     ->delete(true);
 ```
+
+## Filters
+
+You can add predefined filters that can be used when querying your entities.
+Adding such a filter is done by using the `filter` method. The callback passed
+to this method will receive as its first argument an instance of the `Opis\ORM\Core\Query`
+class. The second argument is optional and can be used to help building more dynamic queries.
+
+```php
+class Article extends Entity implements IMappableEntity
+{
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        $mapper->filter('published', function(Query $query, bool $data = true){
+            $query->where('published')->is($data);
+        });
+        
+        $mapper->filter('author', function(Query $query, User $author){
+            $query->where('user_id')->is($author->id());
+        });
+    }
+}
+
+$publishedArticles = $orm(Article::class)
+                        ->filter('published')
+                        ->all();
+                        
+$unpublishedArticles = $orm(Article::class)
+                        ->filter(['published' => false])
+                        ->all();
+```
+
+Of course, you may apply as many filters as you want.
+
+```php
+$articles = $orm(Article::class)
+                ->filter(['published', 'author' => $user)
+                ->limit(10)
+                ->all();
+```
+
+
+
+

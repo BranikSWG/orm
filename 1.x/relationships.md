@@ -29,7 +29,7 @@ foreign key pointing to the parent table's primary key.
 |--|----|
 |1|john|
 |2|jane|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 ***profiles** (child table)*
 
@@ -37,7 +37,7 @@ foreign key pointing to the parent table's primary key.
 |--|-------|---|------|
 |100|1|24|john.jpg|
 |101|2|32|jane.jpg|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 ```php
 class User extends Entity implements IMappableEntity
@@ -101,7 +101,7 @@ was set, doesn't have to be unique to the child table.
 |--|----|
 |1|john|
 |2|jane|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 ***articles** (child table)*
 
@@ -110,7 +110,7 @@ was set, doesn't have to be unique to the child table.
 |100|1|Hello, World!|Content for my article|
 |101|1|Second article|Content for my second article|
 |102|2|First article|Content for my first article|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 
 ```php
@@ -170,7 +170,7 @@ help of a so called junction table.
 |2|Jane|
 |3|Chris|
 |4|Jeff|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 ***job_titles** (child table)*
 
@@ -179,7 +179,7 @@ help of a so called junction table.
 |1|CEO|
 |2|Software developer|
 |3|UI/UX designer|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 ***employees_job_titles** (junction table)*
 
@@ -189,7 +189,7 @@ help of a so called junction table.
 |2|2|
 |3|1|
 |4|3|
-{:.table .table-bordered .box-highlight}
+{:.table .table-bordered .table-striped}
 
 
 In the above example John and Jane are software developers, Chris is CEO, and Jeff is an
