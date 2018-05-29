@@ -28,7 +28,7 @@ class Article extends Entity implements IMappableEntity
 }
 ```
 
-Now every time you create and persist a new entity, the `created_at` column is automatically
+Now, every time you create and persist a new entity, the `created_at` column is automatically
 filled, and every time you update an existing entity the `updated_at` column is
 automatically filled for you.
 
@@ -62,4 +62,31 @@ class Article extends Entity implements IMappableEntity
         $mapper->useSoftDelete();
     }
 }
+```
+
+Now, evey time you delete an entity that uses soft deletion, instead of being 
+permanently removed, it will only be marked as deleted.
+
+```php
+$article = $orm(Article::class)->find(123);
+// Soft deleted
+$orm->delete($article);
+
+// Soft delete unpublished articles
+$orm(Article::class)
+    ->where('published')->is(false)
+    ->delete();
+```
+
+Of course, you can force a permanently deletion of an entity
+
+```php
+$article = $orm(Article::class)->find(123);
+// Permanently deleted
+$orm->delete($article, true);
+
+// Permanently delete unpublished articles
+$orm(Article::class)
+    ->where('published')->is(false)
+    ->delete(true);
 ```
