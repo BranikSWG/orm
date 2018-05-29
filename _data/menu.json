@@ -54,6 +54,11 @@
                     "description": "Learn how to map columns"
                 },
                 {
+                    "title": "Other mappings",
+                    "url": "/1.x/other-mappings.html",
+                    "description": "Learn about other mappings you can perform"
+                },
+                {
                     "title": "Relationships",
                     "url": "/1.x/relationships.html",
                     "description": "Learn how to define relations"
