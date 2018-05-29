@@ -52,6 +52,11 @@
                     "title": "Column mapping",
                     "url": "/1.x/column-mapping.html",
                     "description": "Learn how to map columns"
+                },
+                {
+                    "title": "Relationships",
+                    "url": "/1.x/relationships.html",
+                    "description": "Learn how to define relations"
                 }
             ]
         }
