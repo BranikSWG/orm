@@ -64,6 +64,16 @@
                     "description": "Learn how to define relations"
                 }
             ]
+        },
+        {
+            "title": "Good to know",
+            "pages": [
+                {
+                    "title": "Eager loading",
+                    "url":"/1.x/eager-loading.html",
+                    "description": "Learn how to ptimize queries"
+                }
+            ]
         }
     ]
 }
