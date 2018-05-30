@@ -5,10 +5,8 @@ title: Entities
 ---
 # Entities 
 
-An entity is an object-oriented representation of an SQL table.
-Entity classes are derived from the `Opis\ORM\Entity` base class, 
-and each instance of such a class is a direct mapping to a row of its
-corresponding table.
+An entity is an object-oriented representation of a table's row, in a form
+of a class which extends the `Opis\ORM\Entity` base class.
 
 ```php
 use Opis\ORM\Entity;
