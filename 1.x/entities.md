@@ -48,4 +48,4 @@ class User extends Entity
 }
 ```
 
-[0]: /1.x/data-mappers.html "Data mappers"
+[0]: /1.x/data-mapper.html "Data mappers"
