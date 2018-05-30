@@ -7,6 +7,10 @@ title: Quick start
 
 - [The entity manager](#the-entity-manager)
 - [Defining entities](#defining-entities)
+    - [User entity](#user-entity)
+    - [Article entity](#article-entity)
+    - [Mapping entities](#mapping-entities)
+    - [Relationships](#relationships)
 - [Working with entities](#working-with-entities)
 
 
@@ -38,7 +42,7 @@ $orm = new EntityManager($connection);
 
 ## Defining entities
 
-Entities are an object-oriented representation of your database tables.
+Entities are an object-oriented representation of a table row.
 They are represented with the help of classes and each instance of such 
 a class is a direct mapping to a table's record. Entity classes inherit
 from `Opis\ORM\Entity` base class, which provides a single method, named
@@ -46,13 +50,35 @@ from `Opis\ORM\Entity` base class, which provides a single method, named
 The data mapper object has various methods that allows you to interact 
 with the entity's records.
 
-Let's define two entities: `My\Blog\User` and `My\Blog\Article`, and see how
-we can use them.
+Let's consider the following tables
 
-#### User entity
+***users** table*
 
-This class will contain, at first, only two methods: a method for setting the name of
-the user, and another one for getting their name. As you can see, this is done with the help of 
+|column|description|
+|------|-----------|
+|id|integer, primary key, autoincrement|
+|name|varchar|
+{:.table .table-bordered .table-striped}
+
+***articles** table*
+
+|column|description|
+|------|-----------|
+|id|integer, primary key, autoincrement|
+|user_id|integer, foreign key to *users.id*|
+|title|varchar|
+|content|text|
+{:.table .table-bordered .table-striped}
+
+
+For each of these tables we'll define an entity: `My\Blog\User` for the *users* table and
+`My\Blog\Article` for the *article* table.
+
+### User entity
+
+This class will contain, at first, only three methods: 
+a method for getting the user's ID, a method for setting the name of
+the user, and another one for getting its name. As you can see, this is done with the help of 
 the `getColumn` and `setColumn` methods.
 
 ```php
@@ -62,6 +88,15 @@ use Opis\ORM\Entity;
 
 class User extends Entity
 {
+    /**
+     * Get user's ID
+     * @return int
+     */
+    public function id(): int
+    {
+        return $this->orm()->getColumn('id');
+    }
+        
     /**
      * Get user's name
      * @return string
@@ -84,7 +119,7 @@ class User extends Entity
 }
 ```
 
-#### Article entity
+### Article entity
 
 The class for the *Article* entity is pretty much similar with the previous one.
 
@@ -95,6 +130,15 @@ use Opis\ORM\Entity;
 
 class Article extends Entity
 {
+    /**
+     * Get article's ID
+     * @return int
+     */
+    public function id(): int
+    {
+        return $this->orm()->getColumn('id');
+    }
+    
     /**
      * Get article's title
      * @return string
@@ -137,20 +181,17 @@ class Article extends Entity
 }
 ```
 
-#### Relationships between entities
+### Mapping entities
 
-
-In our example, the *Article* entity doesn't make sense without a *User* entity.
-That's because an article is something that a user creates. 
-So, in other words: every *Article* belongs to a *User*, and a *User* can have multiple *Article*s.
-
-In order to express the relationship between the *Article* and the *User* entity, 
-we must first associate our entity with an entity mapper.
-The most simple way of doing that, it's by implementing the
-`Opis\ORM\IEntityMapper` interface on our entity class.
-
-Then, we can simply tell the entity mapper that the *Article*
-belongs to a *User*, by defining a `belongs to` relation and name it `author`.
+As we can see, the `id` method returns a value
+whose type is `int`, on both entity classes. 
+The code will work fine as long as `declare(strict_types=1)` is not used.
+To prevent any unpleasant errors, in case of strict typing, we must
+specify that the value of the `id` column to be casted to an integer before being returned
+by the `getColumn` method.
+We do this by using an entity mapper. The most simple way of accessing the entity mapper
+for a specify entity class,
+is by implementing the `Opis\ORM\IMappableEntity` interface on that entity class.   
 
 ```php
 namespace My\Blog;
@@ -158,73 +199,26 @@ namespace My\Blog;
 use Opis\ORM\{
     Entity, 
     IEntityMapper,
-    Core\EntityMapper
+    IMappableEntity
 };
 
-class Article extends Entity implements IEntityMapper
-{
-    // ... other methods here
-
-    /**
-     * @inheritdoc
-     */
-    public static function mapEntity(EntityMapper $mapper)
-    {
-        // Establish a belongs-to relationship with the User entity
-        $mapper->relation('author')->belongsTo(User::class);
-    }
-}
-```
-
-Now that we have defined our relationship, let's use it inside our class.
-
-```php
-namespace My\Blog;
-
-use Opis\ORM\{
-    Entity, 
-    IEntityMapper,
-    Core\EntityMapper
-};
-
-class Article extends Entity implements IEntityMapper
+class User extends Entity implements IMappableEntity
 {
     // ... other methods here
     
     /**
-     * Get article's author
-     * @return User
-     */
-    public function getAuthor(): User
-    {
-        return $this->orm()->getRelated('author');
-    }
-
-    /**
-     * Set article's author
-     * @param User $user
-     * @return Article
-     */
-    public function setAuthor(User $user): self
-    {
-        $this->orm()->setRelated('author', $user);
-        return $this;
-    }
-    
-    /**
      * @inheritdoc
      */
-    public static function mapEntity(EntityMapper $mapper)
+    public static function mapEntity(IEntityMapper $mapper)
     {
-        // Establish a belongs-to relationship with the User entity
-        $mapper->relation('author')->belongsTo(User::class);
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
     }
-}
+} 
 ```
 
-The same thing can be done regarding the *User* entity. 
-Here, we need to tell the entity mapper that a user could have
-multiple articles, and then we'll define a method that will use that relationship.
+The same thing must be done for the *Article* entity as well
 
 ```php
 namespace My\Blog;
@@ -232,10 +226,59 @@ namespace My\Blog;
 use Opis\ORM\{
     Entity, 
     IEntityMapper,
-    Core\EntityMapper
+    IMappableEntity
 };
 
-class User extends Entity implements IEntityMapper
+class Article extends Entity implements IMappableEntity
+{
+    // ... other methods here
+    
+    /**
+     * @inheritdoc
+     */
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
+    }
+} 
+```
+
+### Relationships
+
+Now that we have access to the entity mapper, is time to set the relationship
+between our two entities. As we can see, the *articles* table has a foreign key,
+on a column named `user_id`, that points to the *users* table.
+The value of the `user_id` column don't have uniqueness constraints, so the same
+value might appear multiple times. In plain words, this means that a user can have multiple
+articles. We can express this relationship by using the `relation` and `hasMany` methods.
+
+```php
+class User extends Entity implements IMappableEntity
+{
+    // ... other methods here
+    
+    /**
+     * @inheritdoc
+     */
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
+        
+        // A relation named "articles"
+        $mapper->relation('articles')->hasMany(Article::class);
+    }
+} 
+``` 
+
+Once the relation has been defined, we could use it inside our class.
+This is done by passing the name of the relation to the `getRelated` method.
+
+```php
+class User extends Entity implements IMappableEntity
 {
     // ... other methods here
     
@@ -251,18 +294,89 @@ class User extends Entity implements IEntityMapper
     /**
      * @inheritdoc
      */
-    public static function mapEntity(EntityMapper $mapper)
+    public static function mapEntity(IEntityMapper $mapper)
     {
-        // Establish a "has many" relationship with the Article entity
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
+        
+        // A relation named "articles"
         $mapper->relation('articles')->hasMany(Article::class);
     }
-}
+} 
+```
+
+Nice! All we have left to do now, is to set the relation between the *Article* entity
+and the *User* entity. Since every article must belong to a user, we will use the
+`belongTo` method to express this relationship.
+
+```php
+class Article extends Entity implements IMappableEntity
+{
+    // ... other methods here
+    
+    /**
+     * @inheritdoc
+     */
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
+        
+        // A relation named "author"
+        $mapper->relation('author')->belongsTo(User::class);
+    }
+} 
+```
+
+That's it! Now we can use the `setRelated` and `getRelated` methods for setting
+and getting the author of an article.
+
+```php
+class Article extends Entity implements IMappableEntity
+{
+    // ... other methods here
+    
+    /**
+     * Get article's author
+     * @return User
+     */
+    public function getAuthor(): User
+    {
+        return $this->orm()->getRelated('author');
+    }
+    
+    /**
+     * Set article's author
+     * @param User $user
+     * @return Article
+     */
+    public function setAuthor(User $user): self
+    {
+        $this->orm()->setRelated('author', $user);
+        return $this;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public static function mapEntity(IEntityMapper $mapper)
+    {
+        $mapper->cast([
+            'id' => 'integer'
+        ]);
+        
+        // A relation named "author"
+        $mapper->relation('author')->belongsTo(User::class);
+    }
+} 
 ```
 
 ## Working with entities
 
 Creating a new entity is accomplished by calling the `create` method on the entity manager
-instance. The newly created entity will not be persisted into the database, until the
+instance. The newly created entity will not be persisted into the database until the
 `save` method is called.
 
 ```php
@@ -287,11 +401,17 @@ $orm->save($user);
 $article = $orm->create(Article::class);
 
 // Setup article
-$article->setTitle('My first article')
+$article->setTitle('first My article') // oops
         ->setContent("This is my article's content")
         ->setAuthor($user);
+        
+// Persist our article
+$orm->save($article);
 
+// Fix it
+$article->setTitle('My first article');
+// Update it
 $orm->save($article);
 ```
 
-[0]: /database/4.x/connections "Opis Database"
+[0]: /database/4.x/connections.html "Opis Database Connections"
