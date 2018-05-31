@@ -73,7 +73,7 @@ $users = $orm(User::class)->get();
 
 ## Building queries
 
-A more in depth documentation about query building can be found on the *Query building* section
+A more complete documentation about query building can be found by reading the *Query builder* chapter
 of the [Opis Database] library.
 
 ### Filter

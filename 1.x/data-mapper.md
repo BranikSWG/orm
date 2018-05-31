@@ -9,7 +9,8 @@ title: Data mapper
 - [Setting column values](#setting-column-values)
 - [Handling relationships](#handling-relationships)
     - [Linked entities](#linked-entities)
-- [Miscellaneous](#miscellaneous)
+- [Reload data](#reload-data)
+- [Meta information](#meta-information)
 
 A data mapper is an instance of a class that implements the `Opis\Orm\IDataMapper` interface.
 This interface provides several methods that can be used to manipulate the data
@@ -146,7 +147,16 @@ and make them unrelated. This can be accomplished with the help of the `unlink` 
 $this->orm()->unlink('hobbies', $value);
 ```
 
-## Miscellaneous
+## Reload data
+
+If you want to force a data mapper hydration, you can simply specify that
+the values contained by the data mapper are stale.
+
+```php
+$this->orm()->stale();
+```
+
+## Meta information
 
 Checking if the data mapper was altered, by either setting a column's value or 
 by setting a relationship, is done with the help of the `wasModified` method.
@@ -181,12 +191,5 @@ You can also check if the row referenced by a data mapper is available only for 
 if ($this->orm()->isReadOnly()) {
     // just for reading
 }
-```
-
-If you want to force a reload of the row's data, you can simply specify that
-the data mapper's values are stalled.
-
-```php
-$this->orm()->stale();
 ```
 
