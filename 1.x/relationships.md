@@ -256,7 +256,7 @@ class JobTitle extends Entity implements IMappableEntity
 }
 ```
 
-Which, at its turn, is also just a shortcut for the following:
+Which is also just a shortcut for the following:
 
 ```php
 class Employee extends Entity implements IMappableEntity
