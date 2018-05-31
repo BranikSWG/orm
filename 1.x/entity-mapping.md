@@ -9,7 +9,7 @@ title: Mapping entities
 - [Changing table name](#changing-table-name)
 - [Changing primary key](#changing-primary-key)
 - [Primary key generator](#primary-key-generator)
-- [Name of sequence object](#name-of-sequence-object)
+- [Sequence object](#sequence-object)
 
 ## Entity mappers
 
@@ -110,6 +110,18 @@ class User extends Entity implements IEntityMapper
 }
 ```
 
+The library provides support for composite primary keys as well
+
+```php
+class Foo extends Entity implements IEntityMapper
+{
+    public static function mapEntity(EntityMapper $mapper)
+    {
+        $mapper->primaryKey('column_1', 'column_2', 'column_n');
+    }
+}
+```
+
 ## Primary key generator
 
 You can use a generator to automatically assign a value for your primary key.
@@ -128,7 +140,26 @@ class User extends Entity implements IEntityMapper
 }
 ```
 
-## Name of sequence object
+If you need to generate a composite primary key, simply return a key-value mapped array
+
+```php
+class Foo extends Entity implements IEntityMapper
+{
+    public static function mapEntity(EntityMapper $mapper)
+    {
+        $mapper->primaryKeyGenerator(function(){
+            // Generate PK
+            return [
+                'column_1' => 'value1',
+                'column_2' => 'value2',
+            ];
+        });
+    }
+}
+```
+
+
+## Sequence object
 
 **Opis ORM** allows you to create entities without explicitly adding a value for
 the [primary key](#changing-primary-key). This is useful when you are relying on the 

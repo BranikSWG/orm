@@ -8,6 +8,10 @@ lib:
 ---
 # About
 
+This documentation is not yet 100% completed, 
+but it manages to cover the most important topics
+{:.alert.alert-info}
+
 **Opis ORM** is a library, that provides an implementation for the Data Mapper pattern,
 built with the following goals in mind: simplicity, productivity, and smooth learning curve.
 

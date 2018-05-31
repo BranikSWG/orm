@@ -78,8 +78,8 @@ foreach($articles as $article) {
 }
 ```
 
-The above code will execute 1 query to fetch the articles, then foreach of the 10 articles
-fetched, it will execute another query to fetch its author, resulting in a total of 11 query
+The above code will execute 1 query to fetch the articles, then for each of the 10 articles
+fetched, it will execute another query to fetch its author, resulting in a total of 11 queries
 executed. 
 
 We can reduce this operation to just 2 queries by using eager loading. 
