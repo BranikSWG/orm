@@ -6,13 +6,20 @@ title: Query builder
 # Query builder
 
 - [Fetching entities](#fetching-entities)
+    - [*find* method](#find)
+    - [*findAll* method](#findall)
+    - [*all* method](#all)
+    - [*get* method](#get)
 - [Building queries](#building-queries)
+    - [Filter](#filter)
+    - [Order](#order)
+    - [Offsets and limits](#offsets-and-limits)
 - [Updating entities](#updating-entities)
 - [Deleting entities](#deleting-entities)
 
 
-The query builder is based on the infrastructure provided by Opis Database library,
-and provides methods for fetching, updating or deleting records. 
+The query builder is based on the powerful foundation provided by [Opis Database] library,
+and offers methods for fetching, updating or deleting records. 
 
 ## Fetching entities
 
@@ -65,6 +72,9 @@ $users = $orm(User::class)->get();
 ```
 
 ## Building queries
+
+A more in depth documentation about query building can be found on the *Query building* section
+of the [Opis Database] library.
 
 ### Filter
 
@@ -151,3 +161,5 @@ $orm(User::class)
     ->where('age')->lessThan(13)
     ->delete(); 
 ```
+
+[Opis Database]: /database "Opis Database"
