@@ -21,7 +21,7 @@ everything will be explained later in detail.
 
 ## The entity manager
 
-The main function of the entity manager is to provide methods for creating, fetching,
+The main function of the [entity manager] is to provide methods for creating, fetching,
 updating, and deleting an entity. The very first thing you must do, 
 in order to be able to use the entity manager, is to define a connection to your 
 database. The connection is defined with the help of the `Opis\Database\Connection` 
@@ -42,12 +42,12 @@ $orm = new EntityManager($connection);
 
 ## Defining entities
 
-Entities are an object-oriented representation of a table row.
+[Entities][1] are an object-oriented representation of a table row.
 They are represented with the help of classes and each instance of such 
 a class is a direct mapping to a table's record. Entity classes inherit
 from `Opis\ORM\Entity` base class, which provides a single method, named
-`orm`, that returns a data mapper object. 
-The data mapper object has various methods that allows you to interact 
+`orm`, that returns a [data mapper] object. 
+The data mapper object has various methods that allow us to interact 
 with the entity's records.
 
 Let's consider the following tables
@@ -72,7 +72,7 @@ Let's consider the following tables
 
 
 For each of these tables we'll define an entity: `My\Blog\User` for the *users* table and
-`My\Blog\Article` for the *article* table.
+`My\Blog\Article` for the *articles* table.
 
 ### User entity
 
@@ -183,13 +183,13 @@ class Article extends Entity
 
 ### Mapping entities
 
-As we can see, the `id` method returns a value
-whose type is `int`, on both entity classes. 
+As we can see, the `id` method, of both entity classes, returns a value
+whose type is `int`. 
 The code will work fine as long as `declare(strict_types=1)` is not used.
-To prevent any unpleasant errors, in case of strict typing, we must
-specify that the value of the `id` column to be casted to an integer before being returned
-by the `getColumn` method.
-We do this by using an entity mapper. The most simple way of accessing the entity mapper
+To prevent any unpleasant errors, in case of a strict typing constraint, we must
+specify that the value of the `id` column needs to be casted to an integer before 
+it's returned by the `getColumn` method.
+We do this by using an [entity mapper]. The most simple way of accessing the entity mapper
 for a specify entity class,
 is by implementing the `Opis\ORM\IMappableEntity` interface on that entity class.   
 
@@ -218,7 +218,7 @@ class User extends Entity implements IMappableEntity
 } 
 ```
 
-The same thing must be done for the *Article* entity as well
+The same thing needs to be done for the *Article* entity
 
 ```php
 namespace My\Blog;
@@ -248,7 +248,7 @@ class Article extends Entity implements IMappableEntity
 ### Relationships
 
 Now that we have access to the entity mapper, is time to set the relationship
-between our two entities. As we can see, the *articles* table has a foreign key,
+between our two entities. As it was shown, the *articles* table has a foreign key,
 on a column named `user_id`, that points to the *users* table.
 The value of the `user_id` column don't have uniqueness constraints, so the same
 value might appear multiple times. In plain words, this means that a user can have multiple
@@ -306,9 +306,9 @@ class User extends Entity implements IMappableEntity
 } 
 ```
 
-Nice! All we have left to do now, is to set the relation between the *Article* entity
+All that remains to do now is to set the relation between the *Article* entity
 and the *User* entity. Since every article must belong to a user, we will use the
-`belongTo` method to express this relationship.
+`belongsTo` method to express this relationship.
 
 ```php
 class Article extends Entity implements IMappableEntity
@@ -415,3 +415,7 @@ $orm->save($article);
 ```
 
 [0]: /database/4.x/connections.html "Opis Database Connections"
+[1]: entities.html "Entities"
+[entity manager]: entity-manager.html "Entity manager"
+[data mapper]: data-mapper.html "Data mapper"
+[entity mapper]: entity-mapping.html#entity-mappers "Entity mappers"
