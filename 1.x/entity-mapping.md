@@ -79,7 +79,7 @@ $orm->registerMappingCallback(User::class, function(IEntityMapper $mapper){
 
 ## Entity name
 
-The name of an entity is automatically derived from its class name. Therefor, if
+The name of an entity is automatically derived from its class name. Therefore, if
 the class of an entity is `My\Blog\Foo`, the resulted entity name will be `foo`.
 If the entity's class is `My\Blog\FooBar`, the resulted entity name will be `foo_bar`.
 The entity name is important because is used to help automate the mapping process.
@@ -101,7 +101,7 @@ class User extends Entity implements IEntityMapper
 ## Changing table name
 
 The corresponding table of an entity is derived from the entity name plus the `s` suffix. 
-Therefor, if a class `My\Blog\User` represents an entity, then
+Therefore, if a class `My\Blog\User` represents an entity, then
 the corresponding table would be `users`. 
 Of course, this is not always a desired behavior. Changing the table's name is
 simply a matter of calling the `table` method on the entity mapper instance.
