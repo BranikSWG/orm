@@ -6,6 +6,7 @@ title: Mapping entities
 # Entity mapping
 
 - [Entity mappers](#entity-mappers)
+- [Entity name](#entity-name)
 - [Changing table name](#changing-table-name)
 - [Changing primary key](#changing-primary-key)
 - [Primary key generator](#primary-key-generator)
@@ -76,10 +77,31 @@ $orm->registerMappingCallback(User::class, function(IEntityMapper $mapper){
 });
 ```
 
+## Entity name
+
+The name of an entity is automatically derived from its class name. Therefor, if
+the class of an entity is `My\Blog\Foo`, the resulted entity name will be `foo`.
+If the entity's class is `My\Blog\FooBar`, the resulted entity name will be `foo_bar`.
+The entity name is important because is used to help automate the mapping process.
+Because in PHP class names are case-insensitive, there would be some situations
+when you will want to set the entity name explicitly. This is done with the help
+of the `entityName` method.
+
+```php
+class User extends Entity implements IEntityMapper
+{
+    public static function mapEntity(EntityMapper $mapper)
+    {
+        $mapper->entityName('user');
+    }
+}
+```
+
+
 ## Changing table name
 
-The corresponding table of an entity is derived from the entity's class name,
-in lowercase, + the `s` suffix. Therefor, if a class `My\Blog\User` represents an entity, then
+The corresponding table of an entity is derived from the entity name plus the `s` suffix. 
+Therefor, if a class `My\Blog\User` represents an entity, then
 the corresponding table would be `users`. 
 Of course, this is not always a desired behavior. Changing the table's name is
 simply a matter of calling the `table` method on the entity mapper instance.

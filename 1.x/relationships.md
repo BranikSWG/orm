@@ -49,9 +49,9 @@ class User extends Entity implements IMappableEntity
 }
 ```
 
-By default, the name of the foreign key column is derived form the name of the parent table
+By default, the name of the foreign key column is derived form the [entity name]
 and the name of the candidate column.
-For example a parent table named `foo`, that has a candidate column `bar`, would be
+For example, an entity named `foo`, that has a candidate column `bar`, would be
 referenced by a foreign key set on a column named `foo_bar`.
 If the foreign key is set to a different column,
 you must specify this by using the `Opis\ORM\Core\ForeignKey` class.
@@ -290,3 +290,5 @@ class JobTitle extends Entity implements IMappableEntity
     }
 }
 ```
+
+[entity name]: entity-mapping.html#entity-name "Entity name"
