@@ -4,7 +4,7 @@ version: 1.x
 title: About
 lib: 
     name: opis/orm
-    version: 1.0.0
+    version: 1.0
 ---
 # About
 
@@ -22,8 +22,8 @@ just plain, comprehensible PHP code - and we believe *Opis ORM* delivers that.
 **Opis ORM** is licensed under the [Apache License, Version 2.0][apache_license].
 
 ## Requirements
-* PHP 7.0.0 or higher
-* [Opis Database] ^4.0.0
+* PHP ^7.0
+* [Opis Database] ^4.0
 
 ## Installation
 
@@ -49,5 +49,5 @@ Or directly in your `composer.json` file
 {:rel="nofollow" target="_blank"}
 [Composer]: http://getcomposer.org "Composer" 
 {:rel="nofollow" target="_blank"}
-[Opis Database]: /database  "Opis Database ^4.0.0" 
+[Opis Database]: /database  "Opis Database ^4.0" 
 {:data-toggle="tooltip"}
